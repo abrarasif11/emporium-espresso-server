@@ -59,7 +59,8 @@ app.put('/coffee/:id', async(req, res) =>{
   const id = req.params.id;
   const filter = {_id: new ObjectId(id)}
   const options = { upsert: true};
-  const updateCoffee = {
+  const updateCoffee = req.body;
+  const coffee = {
     $set: {
       name: updateCoffee.name,
       quantity: updateCoffee.quantity,
@@ -70,6 +71,8 @@ app.put('/coffee/:id', async(req, res) =>{
       photo: updateCoffee.photo,
     }
   }
+  const result = await coffeeCollection.updateOne(filter, coffee, options);
+  res.send(result);
 })
     
 // delete operation 
