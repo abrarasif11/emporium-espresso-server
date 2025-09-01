@@ -86,12 +86,24 @@ app.delete('/coffee/:id', async(req, res) => {
 })
 
 // users API 
+app.get('/user', async(req,res) => {
+  const cursor = userCollection.find();
+  const result = await cursor.toArray()
+  res.send(result);
+})
 
 app.post('/user', async(req,res) => {
  const newUser = req.body;
  console.log("Creating New User", newUser);
  const result = await userCollection.insertOne(newUser);
  res.send(result);
+})
+
+app.delete('user/:id', async (req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id) }
+  const result = await userCollection.deleteOne(query);
+  res.send(result);
 })
 
     // Send a ping to confirm a successful connection
