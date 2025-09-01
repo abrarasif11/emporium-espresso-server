@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
 
     const coffeeCollection = client.db('coffeeDb').collection('coffee')
+    const userCollection = client.db('coffeeDb').collection('users')
 
     // read data
 
@@ -84,6 +85,14 @@ app.delete('/coffee/:id', async(req, res) => {
   res.send(result);
 })
 
+// users API 
+
+app.post('/user', async(req,res) => {
+ const newUser = req.body;
+ console.log("Creating New User", newUser);
+ const result = await userCollection.insertOne(newUser);
+ res.send(result);
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -94,10 +103,6 @@ app.delete('/coffee/:id', async(req, res) => {
   }
 }
 run().catch(console.dir);
-
-
-
-
 
 app.get('/', (req,res) => {
     res.send("emporium espresso server is running");
