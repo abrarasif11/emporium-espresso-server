@@ -99,6 +99,18 @@ app.post('/user', async(req,res) => {
  res.send(result);
 })
 
+
+// user login API 
+app.patch('/user/:email', async(req, res) => {
+  const email = req.params.email;
+  const filter = { email }
+  const updateDoc = {
+    $set: {
+      lastSignInTime : req.body?.lastSignInTime
+    }
+  }
+})
+
 app.delete('/user/:id', async (req, res) =>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id) }
