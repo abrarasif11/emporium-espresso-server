@@ -101,14 +101,16 @@ app.post('/user', async(req,res) => {
 
 
 // user login API 
-app.patch('/user/:email', async(req, res) => {
-  const email = req.params.email;
+app.patch('/user', async(req, res) => {
+  const email = req.body.email;
   const filter = { email }
   const updateDoc = {
     $set: {
       lastSignInTime : req.body?.lastSignInTime
     }
   }
+  const result = await userCollection.updateOne(filter, updateDoc)
+  res.send(result)
 })
 
 app.delete('/user/:id', async (req, res) =>{
